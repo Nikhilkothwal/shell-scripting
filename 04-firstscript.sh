@@ -47,4 +47,21 @@ else
     echo "GIT already $Y installed $N"
 fi
 
+dnf list installed nodejs
+
+if [$? -ne 0]
+then
+    dnf install nodejs:20 -y
+    VALIDATE $? "installing nodejs..."
+else
+    echo "nodejs is already  $Y installed.. $N"
+
+dnf list installed nginx
+
+if [$? -ne 0]
+then
+    dnf install nginx -y
+    VALIDATE $? "installing Nginx"
+else
+    echo "nginx is already installed"
 
