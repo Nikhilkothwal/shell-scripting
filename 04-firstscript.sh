@@ -20,7 +20,9 @@ Checkroot(){
 
     if [USERID -ne 0]
     then
-        echo -e "$Y You must have sudo access to run this script $N"
+        echo -e "$R ERROR: You must have sudo access to run this script $N"
+        exit 1
+    fi
 }
 
 dnf list installed mysql
@@ -31,30 +33,5 @@ then
     VALIDATE $? "Installing mysql"
 else
     echo -e "mysql is already $Y installed $N" 
-fi
-
-
-if [$? -ne 0]
-then
-    dnf install git -y
-    VALIDATE $? "Installing git.."
-else
-    echo -e "GIT already $Y installed $N"
-fi
-
-if [$? -ne 0]
-then
-    dnf install nodejs:20 -y
-    VALIDATE $? "installing nodejs..."
-else
-    echo -e "nodejs is already  $Y installed.. $N"
-fi
-
-if [$? -ne 0]
-then
-    dnf install nginx -y
-    VALIDATE $? "installing Nginx"
-else
-    echo "nginx is already installed"
 fi
 
