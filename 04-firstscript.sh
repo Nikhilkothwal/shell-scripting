@@ -2,27 +2,26 @@
 
 USERID=$(id -u)
 
-R="\e[31m"
-G="\e[32m"
-Y="\e[33m"
-N="\e[47m"
-
-if [$USERID -ne 0]
-then
-    echo "Error you must have sudo access for this command"
-    exit 1
-fi
-
+R="\[e31m"
+G="\[e32m"
+Y="\[e33m"
+N="\[e0m"
 
 VALIDATE(){
     if [$1 -ne 0]
     then
         echo -e "$2 .. $R FAILURE $N"
     else
-        echo "$2 ... $G SUCCESS $N"
+        echo -e "$2 ... $G SUCCESS $N"
     fi 
 }
 
+Checkroot(){
+
+    if [USERID -ne 0]
+    then
+        echo -e "$Y You must have sudo access to run this script $N"
+}
 
 dnf list installed mysql
 
@@ -31,31 +30,25 @@ then
     dnf install mysql -y
     VALIDATE $? "Installing mysql"
 else
-    echo "mysql is already $Y installed $N" 
+    echo -e "mysql is already $Y installed $N" 
 fi
 
-
-dnf list installed git
 
 if [$? -ne 0]
 then
     dnf install git -y
     VALIDATE $? "Installing git.."
 else
-    echo "GIT already $Y installed $N"
+    echo -e "GIT already $Y installed $N"
 fi
-
-dnf list installed nodejs
 
 if [$? -ne 0]
 then
     dnf install nodejs:20 -y
     VALIDATE $? "installing nodejs..."
 else
-    echo "nodejs is already  $Y installed.. $N"
+    echo -e "nodejs is already  $Y installed.. $N"
 fi
-
-dnf list installed nginx
 
 if [$? -ne 0]
 then
